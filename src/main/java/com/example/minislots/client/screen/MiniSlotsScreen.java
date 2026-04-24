@@ -8,7 +8,6 @@ import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.core.Insets;
 import io.wispforest.owo.ui.core.Positioning;
 import io.wispforest.owo.ui.core.Sizing;
-import io.wispforest.owo.ui.parsing.UIModel;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -18,7 +17,6 @@ import java.util.Random;
 public class MiniSlotsScreen extends BaseUIModelScreen<FlowLayout> {
 
     private static final List<String> SYMBOLS = List.of("Diamond", "Gold", "Emerald", "Coal");
-
     private final Random random = new Random();
 
     private LabelComponent coinLabel;
@@ -30,7 +28,6 @@ public class MiniSlotsScreen extends BaseUIModelScreen<FlowLayout> {
     private FlowLayout miniPlayArea;
     private ButtonComponent clickButton;
 
-    // true = Mini-game tab, false = Slots tab
     private boolean miniTabActive = true;
 
     public MiniSlotsScreen() {
@@ -99,6 +96,7 @@ public class MiniSlotsScreen extends BaseUIModelScreen<FlowLayout> {
             slotsStatus.text(Text.literal("Not enough coins"));
             return;
         }
+
         updateCoinLabel();
 
         String s1 = SYMBOLS.get(random.nextInt(SYMBOLS.size()));
