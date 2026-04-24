@@ -1,0 +1,63 @@
+<owo-ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/wisp-forest/owo-lib/1.21/owo-ui.xsd">
+    <components>
+        <flow-layout id="root" direction="vertical">
+            <children>
+                <flow-layout id="tabs" direction="horizontal">
+                    <children>
+                        <button id="tab-mini">
+                            <text>Mini-game</text>
+                        </button>
+                        <button id="tab-slots">
+                            <text>Slots</text>
+                        </button>
+                    </children>
+                    <horizontal-alignment>center</horizontal-alignment>
+                </flow-layout>
+
+                <label id="coin-label">
+                    <text>Coins: 0</text>
+                </label>
+
+                <flow-layout id="mini-panel" direction="vertical">
+                    <children>
+                        <label>
+                            <text>Click-the-Button</text>
+                        </label>
+                        <flow-layout id="mini-play-area" direction="vertical">
+                            <children>
+                                <button id="click-me">
+                                    <text>Click me</text>
+                                </button>
+                            </children>
+                        </flow-layout>
+                    </children>
+                </flow-layout>
+
+                <flow-layout id="slots-panel" direction="vertical">
+                    <children>
+                        <label>
+                            <text>Slot Machine</text>
+                        </label>
+                        <flow-layout direction="horizontal">
+                            <children>
+                                <label id="slot-1"><text>-</text></label>
+                                <label id="slot-2"><text>-</text></label>
+                                <label id="slot-3"><text>-</text></label>
+                            </children>
+                        </flow-layout>
+                        <button id="spin-button">
+                            <text>Spin (-1 coin)</text>
+                        </button>
+                        <label id="slots-status">
+                            <text></text>
+                        </label>
+                    </children>
+                </flow-layout>
+            </children>
+
+            <horizontal-alignment>center</horizontal-alignment>
+            <vertical-alignment>center</vertical-alignment>
+        </flow-layout>
+    </components>
+</owo-ui>
