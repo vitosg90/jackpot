@@ -1,0 +1,28 @@
+<owo-ui>
+    <flow-layout id="root" direction="vertical" horizontal-alignment="center" vertical-alignment="center" gap="6">
+        <flow-layout id="tabs" direction="horizontal" horizontal-alignment="center" gap="4">
+            <button id="tab-mini" text="Mini-game"/>
+            <button id="tab-slots" text="Slots"/>
+        </flow-layout>
+
+        <label id="coin-label" text="Coins: 0"/>
+
+        <flow-layout id="mini-panel" direction="vertical" horizontal-alignment="center" vertical-alignment="center" gap="6" surface="panel">
+            <label text="Click-the-Button"/>
+            <flow-layout id="mini-play-area" direction="vertical" horizontal-alignment="center" vertical-alignment="center" surface="dark-panel">
+                <button id="click-me" text="Click me"/>
+            </flow-layout>
+        </flow-layout>
+
+        <flow-layout id="slots-panel" direction="vertical" horizontal-alignment="center" vertical-alignment="center" gap="6" surface="panel">
+            <label text="Slot Machine"/>
+            <flow-layout direction="horizontal" horizontal-alignment="center" gap="8">
+                <label id="slot-1" text="-"/>
+                <label id="slot-2" text="-"/>
+                <label id="slot-3" text="-"/>
+            </flow-layout>
+            <button id="spin-button" text="Spin (-1 coin)"/>
+            <label id="slots-status" text=""/>
+        </flow-layout>
+    </flow-layout>
+</owo-ui>

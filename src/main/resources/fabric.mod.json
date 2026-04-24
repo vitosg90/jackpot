@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "minislots",
+  "version": "${version}",
+  "name": "Mini Slots",
+  "description": "Client-side owo-lib mini-game and slot machine with jackpot effects",
+  "authors": [
+    "ivanov"
+  ],
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.example.minislots.client.MiniSlotsClient"
+    ]
+  },
+  "mixins": [
+    "minislots.client.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "owo": "*"
+  }
+}
