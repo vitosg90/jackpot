@@ -1,7 +1,7 @@
 package com.example.minislots.client.screen;
 
 import com.example.minislots.client.state.ModState;
-import io.wispforest.owo.ui.base.BaseOwoScreen;
+import io.wispforest.owo.ui.base.BaseUIModelScreen;
 import io.wispforest.owo.ui.component.ButtonComponent;
 import io.wispforest.owo.ui.component.LabelComponent;
 import io.wispforest.owo.ui.container.FlowLayout;
@@ -15,7 +15,8 @@ import net.minecraft.util.Identifier;
 import java.util.List;
 import java.util.Random;
 
-public class MiniSlotsScreen extends BaseOwoScreen<FlowLayout> {
+public class MiniSlotsScreen extends BaseUIModelScreen<FlowLayout> {
+
     private static final List<String> SYMBOLS = List.of("Diamond", "Gold", "Emerald", "Coal");
 
     private final Random random = new Random();
@@ -26,55 +27,58 @@ public class MiniSlotsScreen extends BaseOwoScreen<FlowLayout> {
     private LabelComponent slot3;
     private LabelComponent slotsStatus;
 
-    private FlowLayout miniPanel;
-    private FlowLayout slotsPanel;
     private FlowLayout miniPlayArea;
     private ButtonComponent clickButton;
 
+    // true = Mini-game tab, false = Slots tab
+    private boolean miniTabActive = true;
+
+    public MiniSlotsScreen() {
+        super(FlowLayout.class, DataSource.asset(Identifier.of("minislots", "layout")));
+    }
+
     @Override
     protected void build(FlowLayout rootComponent) {
-        UIModel model = UIModel.load(Identifier.of("minislots", "owo/layout"));
-        FlowLayout modelRoot = model.childById(FlowLayout.class, "root");
-        rootComponent.child(modelRoot);
+        ButtonComponent tabMini = rootComponent.childById(ButtonComponent.class, "tab-mini");
+        ButtonComponent tabSlots = rootComponent.childById(ButtonComponent.class, "tab-slots");
 
-        ButtonComponent tabMini = model.childById(ButtonComponent.class, "tab-mini");
-        ButtonComponent tabSlots = model.childById(ButtonComponent.class, "tab-slots");
+        this.coinLabel = rootComponent.childById(LabelComponent.class, "coin-label");
+        this.slot1 = rootComponent.childById(LabelComponent.class, "slot-1");
+        this.slot2 = rootComponent.childById(LabelComponent.class, "slot-2");
+        this.slot3 = rootComponent.childById(LabelComponent.class, "slot-3");
+        this.slotsStatus = rootComponent.childById(LabelComponent.class, "slots-status");
 
-        this.coinLabel = model.childById(LabelComponent.class, "coin-label");
-        this.slot1 = model.childById(LabelComponent.class, "slot-1");
-        this.slot2 = model.childById(LabelComponent.class, "slot-2");
-        this.slot3 = model.childById(LabelComponent.class, "slot-3");
-        this.slotsStatus = model.childById(LabelComponent.class, "slots-status");
-
-        this.miniPanel = model.childById(FlowLayout.class, "mini-panel");
-        this.slotsPanel = model.childById(FlowLayout.class, "slots-panel");
-        this.miniPlayArea = model.childById(FlowLayout.class, "mini-play-area");
-        this.clickButton = model.childById(ButtonComponent.class, "click-me");
-        ButtonComponent spinButton = model.childById(ButtonComponent.class, "spin-button");
+        this.miniPlayArea = rootComponent.childById(FlowLayout.class, "mini-play-area");
+        this.clickButton = rootComponent.childById(ButtonComponent.class, "click-me");
+        ButtonComponent spinButton = rootComponent.childById(ButtonComponent.class, "spin-button");
 
         miniPlayArea.sizing(Sizing.fixed(180), Sizing.fixed(100));
         miniPlayArea.padding(Insets.of(6));
 
-        tabMini.onPress(button -> switchTab(true));
-        tabSlots.onPress(button -> switchTab(false));
+        tabMini.onPress(button -> {
+            miniTabActive = true;
+            slotsStatus.text(Text.literal("Mini-game tab active"));
+        });
+
+        tabSlots.onPress(button -> {
+            miniTabActive = false;
+            slotsStatus.text(Text.literal("Slots tab active"));
+        });
 
         clickButton.onPress(button -> {
+            if (!miniTabActive) return;
             ModState.addCoin(1);
             updateCoinLabel();
             moveClickButtonRandomly();
         });
 
-        spinButton.onPress(button -> spinSlots());
+        spinButton.onPress(button -> {
+            if (miniTabActive) return;
+            spinSlots();
+        });
 
-        switchTab(true);
         updateCoinLabel();
-    }
-
-    private void switchTab(boolean miniGameActive) {
-        miniPanel.visible(miniGameActive);
-        miniPanel.active(miniGameActive);
-        slotsPanel.visible(!miniGameActive);
-        slotsPanel.active(!miniGameActive);
+        slotsStatus.text(Text.literal("Mini-game tab active"));
     }
 
     private void updateCoinLabel() {
